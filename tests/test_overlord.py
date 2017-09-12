@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 
 import unittest
-from unittest import mock
 import sys
-sys.path.append("..") # TODO: ask instuctor about this kludge
+sys.path.append("..")
 from mining import Overlord
 
 
