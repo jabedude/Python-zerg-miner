@@ -13,7 +13,7 @@ class Overlord(Zerg):
 
     def add_map(self, map_id, summary):
         '''Adds an identifier for a map and a summary of the map'''
-        pass
+        self.maps[map_id] = summary
 
     def action(self, context):
         '''
