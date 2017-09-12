@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from .zerg import Zerg
+from mining.zerg import Zerg
 
 
 class Overlord(Zerg):
@@ -20,3 +20,7 @@ class Overlord(Zerg):
         Entry point of action for Overlord. Context not currently used.
         '''
         pass
+
+    def _generate_drones(self):
+        '''Calculate quantities of drones to create'''
+        raise NotImplementedError
