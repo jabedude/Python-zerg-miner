@@ -2,8 +2,8 @@
 
 import unittest
 import sys
-sys.path.append("..") # TODO: ask instuctor about this kludge
-from mining import Drone
+sys.path.append("..")
+from drone import Drone, Scout, Miner
 
 
 class TestDrone(unittest.TestCase):
@@ -27,3 +27,11 @@ class TestDrone(unittest.TestCase):
     def test_drone_get_init_cost(self):
         cost = Drone().get_init_cost()
         self.assertEqual(cost, 9)
+
+    def test_scout_get_init_cost(self):
+        cost = Scout().get_init_cost()
+        self.assertEqual(cost, 12)
+
+    def test_miner_get_init_cost(self):
+        cost = Miner().get_init_cost()
+        self.assertEqual(cost, 7)

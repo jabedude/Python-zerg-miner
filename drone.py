@@ -1,16 +1,19 @@
 #!/usr/bin/env python3
 
-from .zerg import Zerg
+from mining.zerg import Zerg
 
 
 class Drone(Zerg):
 
-    health = 40
-    capacity = 10
-    moves = 1
+    health_points = 40
+    carrying_capacity = 10
+    move_count = 1
 
     def __init__(self):
         self.step_count = 0
+        self.health = Drone.health_points
+        self.capacity = Drone.carrying_capacity
+        self.moves = Drone.move_count
 
     def action(self, context):
         '''
@@ -25,7 +28,33 @@ class Drone(Zerg):
 
     @classmethod
     def get_init_cost(cls):
-        minerals = cls.health / 10
-        minerals += cls.capacity / 5
-        minerals += cls.moves * 3
+        minerals = cls.health_points // 10
+        minerals += cls.carrying_capacity // 5
+        minerals += cls.move_count * 3
         return minerals
+
+
+class Scout(Drone):
+
+    health_points = 20
+    carrying_capacity = 5
+    move_count = 3
+
+    def __init__(self):
+        super().__init__()
+        self.health = Scout.health_points
+        self.capacity = Scout.carrying_capacity
+        self.moves = Scout.move_count
+
+
+class Miner(Drone):
+
+    health_points = 10
+    carrying_capacity = 15
+    move_count = 1
+
+    def __init__(self):
+        super().__init__()
+        self.health = Miner.health_points
+        self.capacity = Miner.carrying_capacity
+        self.moves = Miner.move_count
