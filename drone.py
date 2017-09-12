@@ -4,11 +4,12 @@ from .zerg import Zerg
 
 
 class Drone(Zerg):
-    def __init__(self, health=40, capacity=10, moves=1):
-        super().__init__()
-        self.health = health
-        self.capacity = capacity
-        self.moves = moves
+
+    health = 40
+    capacity = 10
+    moves = 1
+
+    def __init__(self):
         self.step_count = 0
 
     def action(self, context):
@@ -23,5 +24,8 @@ class Drone(Zerg):
         return self.step_count
 
     @classmethod
-    def get_init_cost():
-        return 0
+    def get_init_cost(cls):
+        minerals = cls.health / 10
+        minerals += cls.capacity / 5
+        minerals += cls.moves * 3
+        return minerals
