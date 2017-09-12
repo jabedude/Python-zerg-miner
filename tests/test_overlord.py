@@ -9,9 +9,9 @@ from mining import Overlord
 class TestOverlord(unittest.TestCase):
 
     def test_overlord_creation(self):
-        o = Overlord()
+        o = Overlord(0, 0)
         self.assertIsInstance(o, Overlord)
 
     def test_overlord_default_health(self):
-        o = Overlord()
+        o = Overlord(0, 0)
         self.assertEqual(o.health, 1)
