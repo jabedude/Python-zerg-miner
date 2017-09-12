@@ -11,5 +11,12 @@ class Overlord(Zerg):
         self.maps = dict()
         self.zerg = dict() # TODO: @property this
 
-    def action(self):
+    def add_map(self, map_id, summary):
+        '''Adds an identifier for a map and a summary of the map'''
+        pass
+
+    def action(self, context):
+        '''
+        Entry point of action for Overlord. Context not currently used.
+        '''
         pass
