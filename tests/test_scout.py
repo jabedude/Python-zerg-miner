@@ -4,6 +4,7 @@ import unittest
 from unittest import mock
 import sys
 sys.path.append("..")
+from overlord import Overlord
 from drone import Scout
 
 
@@ -22,3 +23,9 @@ class TestScout(unittest.TestCase):
     def test_scout_get_init_cost(self):
         cost = Scout().get_init_cost()
         self.assertEqual(cost, 12)
+
+    def test_scout_map_scout(self):
+        mock_Context = mock.Mock()
+        mock_Context.north = mock_Context.south = mock_Context.east = mock_Context.west = '*'
+        s = Scout()
+        o = Overlord(100, 54)
