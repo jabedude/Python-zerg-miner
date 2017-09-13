@@ -22,6 +22,7 @@ class TestOverlord(unittest.TestCase):
         o = Overlord(ticks=100, refined_minerals=54)
         o.add_map(map_id, summary)
         self.assertEqual(o.maps[30000], 2.99)
+        self.assertEqual(Overlord.maps[30000], 2.99)
 
     def test_overlord_generate_drones(self):
         pass
