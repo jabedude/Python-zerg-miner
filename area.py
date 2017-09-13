@@ -23,7 +23,7 @@ class Area:
         ret = ''
         for y_coord in range(int(min_y), int(max_y) + 1):
             for x_coord in range(int(min_x), int(max_x) + 1):
-                ret += "{} ".format(self._data[(x_coord, y_coord)])
+                ret += "{} ".format(self._data.get((x_coord, y_coord), "?"))
             ret += '\n'
 
         return ret
