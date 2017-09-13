@@ -29,7 +29,7 @@ class TestScout(unittest.TestCase):
         self.assertEqual(a[coord], tile)
         self.assertEqual(a[coord2], tile)
 
-    def test_area_string(self):
+    def test_area_string_full_graph(self):
         a = Area()
         expected = '''  ~ * 
   _ # 
@@ -44,6 +44,22 @@ class TestScout(unittest.TestCase):
             (-1, 0): ' ',
             (-1, -1): ' ',
             (0, -1): '~',
+            (1, -1): '*',
+        }
+        a._data = test_map
+        self.assertEqual(a.__str__(), expected)
+
+    def test_area_string_unexplored_graph(self):
+        a = Area()
+        expected = '''? ? * 
+  ? # 
+? * # 
+'''
+        test_map = {
+            (1, 0): '#',
+            (1, 1): '#',
+            (0, 1): '*',
+            (-1, 0): ' ',
             (1, -1): '*',
         }
         a._data = test_map
