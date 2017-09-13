@@ -28,3 +28,23 @@ class TestScout(unittest.TestCase):
         a[coord2] = tile
         self.assertEqual(a[coord], tile)
         self.assertEqual(a[coord2], tile)
+
+    def test_area_string(self):
+        a = Area()
+        expected = '''  ~ * 
+  _ # 
+~ * # 
+'''
+        test_map = {
+            (0, 0): '_',
+            (1, 0): '#',
+            (1, 1): '#',
+            (0, 1): '*',
+            (-1, 1): '~',
+            (-1, 0): ' ',
+            (-1, -1): ' ',
+            (0, -1): '~',
+            (1, -1): '*',
+        }
+        a._data = test_map
+        self.assertEqual(a.__str__(), expected)
