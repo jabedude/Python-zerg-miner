@@ -2,6 +2,7 @@
 
 from mining.zerg import Zerg
 from mining.drone import Drone
+from mining.area import Area
 
 
 class Overlord(Zerg):
@@ -20,8 +21,9 @@ class Overlord(Zerg):
         ### TEMP ###
 
     def add_map(self, map_id, summary):
-        '''Adds an identifier for a map and a summary of the map'''
-        self.maps[map_id] = summary
+        '''Adds an identifier for a map + (map mineral density, internal map)'''
+        internal_map = Area()
+        self.maps[map_id] = (summary, internal_map)
 
     def action(self, context):
         '''
@@ -40,3 +42,8 @@ class Overlord(Zerg):
     def _generate_drones(self, refined_minerals):
         '''Calculate quantities of drones to create'''
         raise NotImplementedError
+
+    def _display_maps(self):
+        '''Prints the state of Overlord internal map to console'''
+        raise NotImplementedError
+
