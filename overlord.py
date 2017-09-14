@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from mining.zerg import Zerg
-from mining.drone import Drone
+from mining.drone.drone import Drone
 from mining.area import Area
 
 
