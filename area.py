@@ -4,6 +4,7 @@ class Area:
 
     def __init__(self, *args):
         self._data = dict(args)
+        self.map_id = None
 
     def __setitem__(self, coordinates, tile):
         self._data[coordinates] = tile
