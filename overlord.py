@@ -46,8 +46,3 @@ class Overlord(Zerg):
     def _generate_drones(self, refined_minerals):
         '''Calculate quantities of drones to create'''
         raise NotImplementedError
-
-    def _display_maps(self):
-        '''Prints the state of Overlord internal map to console'''
-        raise NotImplementedError
-
