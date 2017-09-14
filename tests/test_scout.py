@@ -5,7 +5,7 @@ from unittest import mock
 import sys
 sys.path.append("..")
 from overlord import Overlord
-from drone import Scout
+from drone.drone import Scout
 
 
 class TestScout(unittest.TestCase):

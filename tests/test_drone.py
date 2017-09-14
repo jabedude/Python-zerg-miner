@@ -4,7 +4,7 @@ import unittest
 from unittest import mock
 import sys
 sys.path.append("..")
-from drone import Drone, Miner
+from drone.drone import Drone, Miner
 
 
 class TestDrone(unittest.TestCase):
