@@ -20,10 +20,10 @@ class Drone(Zerg):
 
     def action(self, context):
         '''
-        Entry point of action for Overlord. Context not currently used.
+        Entry point of action for Drone unit. Context information about surrounding tiles.
         '''
         self.step_count += 1
-        mining.Overlord.maps[self.current_map][1].update(self.current_position, context)
+        self.current_map.update(self.current_position, context)
         ### TEMP ###
         import random
         act = random.randint(0, 3)

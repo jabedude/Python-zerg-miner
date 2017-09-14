@@ -23,6 +23,7 @@ class Overlord(Zerg):
     def add_map(self, map_id, summary):
         '''Adds an identifier for a map + (map mineral density, internal map)'''
         internal_map = Area()
+        internal_map.map_id = map_id
         self.maps[map_id] = (summary, internal_map)
 
     def action(self, context):
@@ -38,7 +39,7 @@ class Overlord(Zerg):
         #else:
         #    return "DEPLOY {} {}".format(random.choice(list(self.zerg.keys())),
         #            random.choice(list(self.maps.keys())))
-        list(self.zerg.values())[0].current_map = list(self.maps.keys())[0]
+        list(self.zerg.values())[0].current_map = list(self.maps.values())[0][1]  # TODO: fix this
         return "DEPLOY {} {}".format(list(self.zerg.keys())[0],
                 list(self.maps.keys())[0])
         ### TEMP ###
