@@ -20,6 +20,9 @@ class Area:
         self._data[position.east] = context.east
         self._data[position.south] = context.south
 
+    def get(self, key):
+        return self._data.get(key, "?")
+
     def __contains__(self, item):
         if isinstance(item, str):
             return item in list(self._data.values())
