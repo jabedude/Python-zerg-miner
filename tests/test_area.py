@@ -64,3 +64,33 @@ class TestScout(unittest.TestCase):
         }
         a._data = test_map
         self.assertEqual(a.__str__(), expected)
+
+    def test_area_contains_minerals(self):
+        a = Area()
+        test_map = {
+            (0, 0): '_',
+            (0, 1): '*',
+            (-1, 0): ' ',
+            (-1, -1): ' ',
+            (-4, -1): ' ',
+            (-5, -1): ' ',
+            (-6, -1): ' ',
+            (-1, 7): ' ',
+        }
+        a._data = test_map
+        self.assertIn('*', a)
+
+    def test_area_does_not_contain_acid(self):
+        a = Area()
+        test_map = {
+            (0, 0): '_',
+            (0, 1): '*',
+            (-1, 0): ' ',
+            (-1, -1): ' ',
+            (-4, -1): ' ',
+            (-5, -1): ' ',
+            (-6, -1): ' ',
+            (-1, 7): ' ',
+        }
+        a._data = test_map
+        self.assertNotIn('~', a)

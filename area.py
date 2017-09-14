@@ -19,6 +19,9 @@ class Area:
         self._data[(drone_position[0] - 1, drone_position[1])] = context.east
         self._data[(drone_position[0], drone_position[1] - 1)] = context.south
 
+    def __contains__(self, item):
+        return item in list(self._data.values())
+
     def __str__(self):
         # TODO: @property these attributes
         data = list(self._data.keys())
