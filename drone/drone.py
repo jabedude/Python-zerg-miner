@@ -2,6 +2,7 @@
 
 from mining.zerg import Zerg
 import mining
+from .location import Location
 
 class Drone(Zerg):
 
@@ -15,7 +16,7 @@ class Drone(Zerg):
         self.capacity = Drone.carrying_capacity
         self.moves = Drone.move_count
         self.current_map = None
-        self.current_position = (0, 0)
+        self.position = Location(0, 0)
         self.path_queue = None  # TODO: list() of path (actions)
 
     def action(self, context):
@@ -23,21 +24,21 @@ class Drone(Zerg):
         Entry point of action for Drone unit. Context information about surrounding tiles.
         '''
         self.step_count += 1
-        self.current_map.update(self.current_position, context)
+        self.current_map.update(self.position, context)
         ### TEMP ###
         import random
         act = random.randint(0, 3)
         if act == 0 and context.north == ' ':
-            self.current_position = (self.current_position[0], self.current_position[1] + 1)
+            self.position.current = self.position.north
             return 'NORTH'
         elif act == 1 and context.south == ' ':
-            self.current_position = (self.current_position[0], self.current_position[1] - 1)
+            self.position.current = self.position.south
             return 'SOUTH'
         elif act == 2 and context.east == ' ':
-            self.current_position = (self.current_position[0] - 1, self.current_position[1])
+            self.position.current = self.position.east
             return 'EAST'
         elif act == 3 and context.west == ' ':
-            self.current_position = (self.current_position[0] + 1, self.current_position[1])
+            self.position.current = self.position.west
             return 'WEST'
         else:
             return 'CENTER'

@@ -5,8 +5,30 @@ class Location:
     def __init__(self, x=0, y=0):
         self.x = x
         self.y = y
-        self.current = (x, y)
-        self.east = (x + 1, y)
-        self.west = (x - 1, y)
-        self.north = (x, x + 1)
-        self.south = (x, x - 1)
+
+    def __str__(self):
+        return "({}, {})".format(self.x, self.y)
+
+    @property
+    def current(self):
+        return (self.x, self.y)
+
+    @current.setter
+    def current(self, coords):
+        self.x, self.y = coords
+
+    @property
+    def east(self):
+        return (self.x + 1, self.y)
+
+    @property
+    def west(self):
+        return (self.x - 1, self.y)
+
+    @property
+    def north(self):
+        return (self.x, self.y + 1)
+
+    @property
+    def south(self):
+        return (self.x, self.y - 1)
