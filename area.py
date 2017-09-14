@@ -21,7 +21,10 @@ class Area:
         self._data[(drone_position[0], drone_position[1] - 1)] = context.south
 
     def __contains__(self, item):
-        return item in list(self._data.values())
+        if isinstance(item, str):
+            return item in list(self._data.values())
+        else:
+            return item in list(self._data.keys())
 
     def __str__(self):
         # TODO: @property these attributes

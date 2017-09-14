@@ -94,3 +94,33 @@ class TestScout(unittest.TestCase):
         }
         a._data = test_map
         self.assertNotIn('~', a)
+
+    def test_area_contains_coordinate(self):
+        a = Area()
+        test_map = {
+            (0, 0): '_',
+            (0, 1): '*',
+            (-1, 0): ' ',
+            (-1, -1): ' ',
+            (-4, -1): ' ',
+            (-5, -1): ' ',
+            (-6, -1): ' ',
+            (-1, 7): ' ',
+        }
+        a._data = test_map
+        self.assertIn((-4, -1), a)
+
+    def test_area_does_not_contain_coordinate(self):
+        a = Area()
+        test_map = {
+            (0, 0): '_',
+            (0, 1): '*',
+            (-1, 0): ' ',
+            (-1, -1): ' ',
+            (-4, -1): ' ',
+            (-5, -1): ' ',
+            (-6, -1): ' ',
+            (-1, 7): ' ',
+        }
+        a._data = test_map
+        self.assertNotIn((4, 1), a)
