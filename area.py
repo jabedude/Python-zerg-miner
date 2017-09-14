@@ -13,12 +13,12 @@ class Area:
         tile = self._data[coordinates]
         return tile
 
-    def update(self, drone_position, context):
-        self._data[drone_position] = 'Z'
-        self._data[(drone_position[0], drone_position[1] + 1)] = context.north
-        self._data[(drone_position[0] + 1, drone_position[1])] = context.west
-        self._data[(drone_position[0] - 1, drone_position[1])] = context.east
-        self._data[(drone_position[0], drone_position[1] - 1)] = context.south
+    def update(self, position, context):
+        self._data[position.current] = 'Z'
+        self._data[position.north] = context.north
+        self._data[position.west] = context.west
+        self._data[position.east] = context.east
+        self._data[position.south] = context.south
 
     def __contains__(self, item):
         if isinstance(item, str):
@@ -28,6 +28,7 @@ class Area:
 
     def __str__(self):
         # TODO: @property these attributes
+        print(self._data)
         data = list(self._data.keys())
         min_x = min(data, key=lambda x: x[0], default=(0,0))[0]
         min_y = min(data, key=lambda x: x[1], default=(0,0))[1]
