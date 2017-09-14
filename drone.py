@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from mining.zerg import Zerg
-
+import mining
 
 class Drone(Zerg):
 
@@ -14,13 +14,34 @@ class Drone(Zerg):
         self.health = Drone.health_points
         self.capacity = Drone.carrying_capacity
         self.moves = Drone.move_count
+        self.current_map = None
+        self.current_position = (0, 0)
+        # TODO: list() of path (actions)
 
     def action(self, context):
         '''
         Entry point of action for Overlord. Context not currently used.
         '''
         self.step_count += 1
-        pass
+        mining.Overlord.maps[self.current_map][1].update(self.current_position, context)
+        ### TEMP ###
+        import random
+        act = random.randint(0, 3)
+        if act == 0 and context.north == ' ':
+            self.current_position = (self.current_position[0], self.current_position[1] + 1)
+            return 'NORTH'
+        elif act == 1 and context.south == ' ':
+            self.current_position = (self.current_position[0], self.current_position[1] - 1)
+            return 'SOUTH'
+        elif act == 2 and context.east == ' ':
+            self.current_position = (self.current_position[0] - 1, self.current_position[1])
+            return 'EAST'
+        elif act == 3 and context.west == ' ':
+            self.current_position = (self.current_position[0] + 1, self.current_position[1])
+            return 'WEST'
+        else:
+            return 'CENTER'
+        ### TEMP ###
 
     def steps(self):
         '''Return the number of steps taken by drone'''

@@ -29,14 +29,18 @@ class Overlord(Zerg):
         '''
         Entry point of action for Overlord. Context not currently used.
         '''
+        print(str(list(self.maps.values())[0][1]))
         ### TEMP ###
-        import random
-        act = random.randint(0, 3)
-        if act == 0:
-            return "RETURN {}".format(random.choice(list(self.zerg.keys())))
-        else:
-            return "DEPLOY {} {}".format(random.choice(list(self.zerg.keys())),
-                    random.choice(list(self.maps.keys())))
+        #import random
+        #act = random.randint(0, 3)
+        #if act == 0:
+        #    return "RETURN {}".format(random.choice(list(self.zerg.keys())))
+        #else:
+        #    return "DEPLOY {} {}".format(random.choice(list(self.zerg.keys())),
+        #            random.choice(list(self.maps.keys())))
+        list(self.zerg.values())[0].current_map = list(self.maps.keys())[0]
+        return "DEPLOY {} {}".format(list(self.zerg.keys())[0],
+                list(self.maps.keys())[0])
         ### TEMP ###
 
     def _generate_drones(self, refined_minerals):
