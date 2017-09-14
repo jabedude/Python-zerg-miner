@@ -21,7 +21,6 @@ class Area:
 
     def __str__(self):
         # TODO: @property these attributes
-        print(self._data)
         data = list(self._data.keys())
         min_x = min(data, key=lambda x: x[0], default=(0,0))[0]
         min_y = min(data, key=lambda x: x[1], default=(0,0))[1]
