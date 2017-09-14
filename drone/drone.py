@@ -28,16 +28,16 @@ class Drone(Zerg):
         ### TEMP ###
         import random
         act = random.randint(0, 3)
-        if act == 0 and context.north == ' ':
+        if context.north == ' ' and self.position.north not in self.current_map:
             self.position.current = self.position.north
             return 'NORTH'
-        elif act == 1 and context.south == ' ':
+        elif context.south == ' ' and self.position.south not in self.current_map:
             self.position.current = self.position.south
             return 'SOUTH'
-        elif act == 2 and context.east == ' ':
+        elif context.east == ' ' and self.position.east not in self.current_map:
             self.position.current = self.position.east
             return 'EAST'
-        elif act == 3 and context.west == ' ':
+        elif context.west == ' ' and self.position.west not in self.current_map:
             self.position.current = self.position.west
             return 'WEST'
         else:

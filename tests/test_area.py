@@ -124,3 +124,18 @@ class TestScout(unittest.TestCase):
         }
         a._data = test_map
         self.assertNotIn((4, 1), a)
+
+    def test_area_access_bad_coordinate_returns_question(self):
+        a = Area()
+        test_map = {
+            (0, 0): '_',
+            (0, 1): '*',
+            (-1, 0): ' ',
+            (-1, -1): ' ',
+            (-4, -1): ' ',
+            (-5, -1): ' ',
+            (-6, -1): ' ',
+            (-1, 7): ' ',
+        }
+        a._data = test_map
+        self.assertEqual(a.get((4, 1)), "?")
