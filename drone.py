@@ -16,7 +16,7 @@ class Drone(Zerg):
         self.moves = Drone.move_count
         self.current_map = None
         self.current_position = (0, 0)
-        # TODO: list() of path (actions)
+        self.path_queue = None  # TODO: list() of path (actions)
 
     def action(self, context):
         '''
