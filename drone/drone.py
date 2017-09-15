@@ -17,6 +17,7 @@ class Drone(Zerg):
         self.moves = Drone.move_count
         self.current_map = None
         self.position = Location(0, 0)
+        self.idle = False
         self.path_queue = None  # TODO: list() of path (actions)
 
     def action(self, context):
@@ -28,20 +29,26 @@ class Drone(Zerg):
         ### TEMP ###
         import random
         act = random.randint(0, 3)
-        if context.north == ' ' and self.position.north not in self.current_map:
-            self.position.current = self.position.north
-            return 'NORTH'
-        elif context.south == ' ' and self.position.south not in self.current_map:
-            self.position.current = self.position.south
-            return 'SOUTH'
-        elif context.east == ' ' and self.position.east not in self.current_map:
-            self.position.current = self.position.east
-            return 'EAST'
-        elif context.west == ' ' and self.position.west not in self.current_map:
-            self.position.current = self.position.west
-            return 'WEST'
+        if self.path_queue is None:
+            if context.north == ' ' and not self.current_map.is_explored(self.position.north):
+                self.position.current = self.position.north
+                return 'NORTH'
+            elif context.south == ' ' and not self.current_map.is_explored(self.position.south):
+                self.position.current = self.position.south
+                return 'SOUTH'
+            elif context.east == ' ' and not self.current_map.is_explored(self.position.east):
+                self.position.current = self.position.east
+                return 'EAST'
+            elif context.west == ' ' and not self.current_map.is_explored(self.position.west):
+                self.position.current = self.position.west
+                return 'WEST'
+            else:
+                # TODO: TELL OVERLORD TO GIVE US A PATH
+                self.idle = True
+                return 'CENTER'
         else:
-            return 'CENTER'
+            # TODO: EXECUTE PATH HERE
+            pass
         ### TEMP ###
 
     def steps(self):
