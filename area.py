@@ -5,6 +5,7 @@ class Area:
     def __init__(self, *args):
         self._data = dict(args)
         self.map_id = None
+        self._explored = list((0, 0))
 
     def __setitem__(self, coordinates, tile):
         self._data[coordinates] = tile
@@ -13,7 +14,11 @@ class Area:
         tile = self._data[coordinates]
         return tile
 
+    def is_explored(self, coordinates):
+        return coordinates in self._explored
+
     def update(self, position, context):
+        self._explored.append(position.current)
         self._data[position.current] = 'Z'
         self._data[position.north] = context.north
         self._data[position.west] = context.west
@@ -31,7 +36,6 @@ class Area:
 
     def __str__(self):
         # TODO: @property these attributes
-        print(self._data)
         data = list(self._data.keys())
         min_x = min(data, key=lambda x: x[0], default=(0,0))[0]
         min_y = min(data, key=lambda x: x[1], default=(0,0))[1]
