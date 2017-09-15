@@ -139,3 +139,14 @@ class TestScout(unittest.TestCase):
         }
         a._data = test_map
         self.assertEqual(a.get((4, 1)), "?")
+
+    def test_area_coordinate_is_unexplored(self):
+        a = Area()
+        test_map = {
+            (0, 0): '_',
+            (0, 1): '*',
+            (-1, 0): ' ',
+            (-1, -1): ' ',
+        }
+        a._data = test_map
+        self.assertFalse(a.is_explored((0, 1)))
