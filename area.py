@@ -34,6 +34,9 @@ class Area:
         else:
             return item in list(self._data.keys())
 
+    def __iter__(self):
+        return iter(self._data)
+
     def __str__(self):
         # TODO: @property these attributes
         data = list(self._data.keys())
