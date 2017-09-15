@@ -47,3 +47,6 @@ class Overlord(Zerg):
     def _generate_drones(self, refined_minerals):
         '''Calculate quantities of drones to create'''
         raise NotImplementedError
+
+    def _generate_path(self, zerg_map):
+        raise NotImplementedError
