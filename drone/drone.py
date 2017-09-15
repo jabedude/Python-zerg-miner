@@ -27,8 +27,6 @@ class Drone(Zerg):
         self.step_count += 1
         self.current_map.update(self.position, context)
         ### TEMP ###
-        import random
-        act = random.randint(0, 3)
         if self.path_queue is None:
             if context.north == ' ' and not self.current_map.is_explored(self.position.north):
                 self.position.current = self.position.north
