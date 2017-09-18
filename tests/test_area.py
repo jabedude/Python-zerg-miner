@@ -150,3 +150,37 @@ class TestScout(unittest.TestCase):
         }
         a._data = test_map
         self.assertFalse(a.is_explored((0, 1)))
+
+    def test_area_find_tile(self):
+        a = Area()
+        test_map = {
+            (0, 0): '_',
+            (0, 1): '*',
+            (-1, 0): ' ',
+            (-1, -1): ' ',
+            (-3, 3) : '*',
+            (-4, -1): ' ',
+            (-5, -1): ' ',
+            (-6, -1): ' ',
+            (-1, 7): ' '
+        }
+        a._data = test_map
+        coord = a.find_tile("*")
+        self.assertIn(coord, [(0, 1), (-3, 3)])
+
+    def test_area_find_tile_home(self):
+        a = Area()
+        test_map = {
+            (0, 0): '_',
+            (0, 1): '*',
+            (-1, 0): ' ',
+            (-1, -1): ' ',
+            (-3, 3) : '*',
+            (-4, -1): ' ',
+            (-5, -1): ' ',
+            (-6, -1): ' ',
+            (-1, 7): ' '
+        }
+        a._data = test_map
+        coord = a.find_tile("_")
+        self.assertEqual(coord, (0, 0))
