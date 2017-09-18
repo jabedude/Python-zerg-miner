@@ -31,5 +31,30 @@ class TestPath(unittest.TestCase):
         }
         a._data = test_map
         g = path.area_to_graph(a)
+        expected = {
+            (0, 0): [(0, 1), (-1, 0)], (0, 1): [(0, 2), (0, 0), (1, 1), (-1, 1)],
+            (1, 0): [(1, 1), (0, 0)], (1, -1): [], (0, -1): [(0, 0)], (-1, 0): [(-1, 1),
+            (0, 0)], (-1, -2): [], (-1, 1): [(-1, 0), (0, 1)], (1, 1): [(0, 1)],
+            (0, 2): [(0, 1)]
+        }
+        self.assertEqual(g, expected)
+
+    def test_bfs_pathfind(self):
+        a = Area()
+        test_map = {
+            (0, 0): '_',
+            (0, 1): ' ',
+            (1, 0): '#',
+            (1, -1): '#',
+            (0, -1): '#',
+            (-1, 0): ' ',
+            (-1, -2): ' ',
+            (-1, 1): ' ',
+            (1, 1): ' ',
+            (0, 2): '*'
+        }
+        a._data = test_map
+        g = path.area_to_graph(a)
+        expected = [[(0, 0), (0, 1), (0, 2)], [(0, 0), (-1, 0), (-1, 1), (0, 1), (0, 2)]]
         p = path.bfs_paths(g, (0, 0), (0, 2))
-        print(list(p))
+        self.assertEqual(list(p), expected)
