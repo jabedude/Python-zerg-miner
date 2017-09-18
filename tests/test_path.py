@@ -30,7 +30,7 @@ class TestPath(unittest.TestCase):
             (0, 2): '*'
         }
         a._data = test_map
-        g = path.area_to_graph(a)
+        g = path.area_to_graph(a, goal=(0, 2))
         expected = {
             (0, 0): [(0, 1), (-1, 0)], (0, 1): [(0, 2), (0, 0), (1, 1), (-1, 1)],
             (1, 0): [(1, 1), (0, 0)], (1, -1): [], (0, -1): [(0, 0)], (-1, 0): [(-1, 1),
@@ -54,7 +54,7 @@ class TestPath(unittest.TestCase):
             (0, 2): '*'
         }
         a._data = test_map
-        g = path.area_to_graph(a)
+        g = path.area_to_graph(a, goal=(0, 2))
         expected = [[(0, 0), (0, 1), (0, 2)], [(0, 0), (-1, 0), (-1, 1), (0, 1), (0, 2)]]
         p = path.bfs_paths(g, (0, 0), (0, 2))
         self.assertEqual(list(p), expected)
