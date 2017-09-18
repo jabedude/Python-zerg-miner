@@ -58,3 +58,37 @@ class TestPath(unittest.TestCase):
         expected = [[(0, 0), (0, 1), (0, 2)], [(0, 0), (-1, 0), (-1, 1), (0, 1), (0, 2)]]
         p = path.bfs_paths(g, (0, 0), (0, 2))
         self.assertEqual(list(p), expected)
+
+    def test_bfs_shortest_pathfind(self):
+        a = Area()
+        test_map = {
+            (0, 0): '_',
+            (0, 1): ' ',
+            (1, 0): '#',
+            (1, -1): '#',
+            (0, -1): '#',
+            (-1, 0): ' ',
+            (-1, -2): ' ',
+            (-1, 1): ' ',
+            (1, 1): ' ',
+            (0, 2): '*'
+        }
+        a._data = test_map
+        g = path.area_to_graph(a, goal=(0, 2))
+        expected = [(0, 0), (0, 1), (0, 2)]
+        p = path.shortest_path(g, (0, 0), (0, 2))
+        self.assertEqual(p, expected)
+
+    def test_generate_directions(self):
+        coordinates = [(0, 0), (0, 1), (0, 2)]
+        p = path.generate_directions(coordinates)
+        p = list(p)
+        expected = ['NORTH', 'NORTH']
+        self.assertEqual(p, expected)
+
+    def test_generate_directions_v2(self):
+        coordinates = [(0, 0), (1, 0), (1, 1)]
+        p = path.generate_directions(coordinates)
+        p = list(p)
+        expected = ['EAST', 'NORTH']
+        self.assertEqual(p, expected)
