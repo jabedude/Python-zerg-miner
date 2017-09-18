@@ -81,14 +81,34 @@ class TestPath(unittest.TestCase):
 
     def test_generate_directions(self):
         coordinates = [(0, 0), (0, 1), (0, 2)]
-        p = path.generate_directions(coordinates)
-        p = list(p)
+        p = path.generate_cardinality(coordinates)
         expected = ['NORTH', 'NORTH']
         self.assertEqual(p, expected)
 
     def test_generate_directions_v2(self):
         coordinates = [(0, 0), (1, 0), (1, 1)]
-        p = path.generate_directions(coordinates)
-        p = list(p)
+        p = path.generate_cardinality(coordinates)
         expected = ['EAST', 'NORTH']
         self.assertEqual(p, expected)
+
+    def test_generate_path_home(self):
+        a = Area()
+        test_map = {
+            (0, 0): '_',
+            (0, 1): ' ',
+            (1, 0): '#',
+            (1, -1): '#',
+            (0, -1): '#',
+            (-1, 0): ' ',
+            (-1, -2): ' ',
+            (-1, 1): ' ',
+            (1, 1): ' ',
+            (0, 2): '*'
+        }
+        a._data = test_map
+        g = path.area_to_graph(a, goal=(0, 2))
+        p = path.shortest_path(g, (0, 0), (0, 2))
+        r = path.shortest_path(g, (0, 2), (0, 0))
+        print()
+        print(path.generate_cardinality(p))
+        print(path.generate_cardinality(r))
