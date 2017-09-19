@@ -109,6 +109,11 @@ class TestPath(unittest.TestCase):
         g = path.area_to_graph(a, goal=(0, 2))
         p = path.shortest_path(g, (0, 0), (0, 2))
         r = path.shortest_path(g, (0, 2), (0, 0))
-        print()
-        print(path.generate_cardinality(p))
-        print(path.generate_cardinality(r))
+        self.assertEqual(
+            ['NORTH', 'NORTH'],
+            path.generate_cardinality(p)
+        )
+        self.assertEqual(
+            ['SOUTH', 'SOUTH'],
+            path.generate_cardinality(r)
+        )

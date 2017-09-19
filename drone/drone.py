@@ -47,7 +47,6 @@ class Drone(Zerg):
         '''
         Entry point of action for Drone unit. Context information about surrounding tiles.
         '''
-        self.step_count += 1
         print(self.last_move)
         print(self.path_queue)
         print(self.returning)
@@ -61,6 +60,7 @@ class Drone(Zerg):
             }
             move = directions[self.last_move]
             self.position.current = tuple(map(lambda x, y: x + y, self.position.current, move))
+            self.step_count += 1
         elif (self.last_move is not None and self.path_queue is not None and
               self.last_xy == (context.x, context.y) and not self.returning):
             # Mining here
