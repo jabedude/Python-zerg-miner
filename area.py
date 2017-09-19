@@ -7,13 +7,6 @@ class Area:
         self.map_id = None
         self._explored = list((0, 0))
 
-    def __setitem__(self, coordinates, tile):
-        self._data[coordinates] = tile
-
-    def __getitem__(self, coordinates):
-        tile = self._data[coordinates]
-        return tile
-
     def is_explored(self, coordinates):
         return coordinates in self._explored
 
@@ -27,6 +20,18 @@ class Area:
 
     def get(self, key):
         return self._data.get(key, "?")
+
+    def find_tile(self, tile):
+        for coord, area_tile in self._data.items():
+            if area_tile == tile:
+                return coord
+
+    def __setitem__(self, coordinates, tile):
+        self._data[coordinates] = tile
+
+    def __getitem__(self, coordinates):
+        tile = self._data.get(coordinates, "?")
+        return tile
 
     def __contains__(self, item):
         if isinstance(item, str):

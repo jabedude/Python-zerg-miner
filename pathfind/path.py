@@ -17,7 +17,7 @@ def linear_distance(point_one, point_two):
 
 def area_to_graph(area, goal=None):
     graph = dict()
-    area = copy.deepcopy(area)
+    #area = copy.deepcopy(area)
     if goal is not None:
         area[goal] = ' '
 

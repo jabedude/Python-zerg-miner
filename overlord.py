@@ -3,6 +3,11 @@
 from mining.zerg import Zerg
 from mining.drone.drone import Drone
 from mining.area import Area
+from mining.pathfind.path import (
+        area_to_graph,
+        shortest_path,
+        generate_cardinality
+)
 
 
 class Overlord(Zerg):
@@ -32,6 +37,10 @@ class Overlord(Zerg):
         '''
         print(str(list(self.maps.values())[0][1]))
         ### TEMP ###
+        for unit in list(self.zerg.values()):
+            if unit.status:
+                unit.path_queue = self._generate_path(unit.current_map, unit.position.current)
+                unit.status = False
         #import random
         #act = random.randint(0, 3)
         #if act == 0:
@@ -48,5 +57,13 @@ class Overlord(Zerg):
         '''Calculate quantities of drones to create'''
         raise NotImplementedError
 
-    def _generate_path(self, zerg_map):
-        raise NotImplementedError
+    def _generate_path(self, zerg_map, current_position):
+        mineral_coord = zerg_map.find_tile("*")
+        # TODO: if no min_coord, return HOME
+        graph = area_to_graph(zerg_map, goal=mineral_coord)
+        if not mineral_coord:
+            coordinate_path = shortest_path(graph, current_position, (0, 0))
+        else:
+            coordinate_path = shortest_path(graph, current_position, mineral_coord)
+        print(coordinate_path)
+        return generate_cardinality(coordinate_path)
