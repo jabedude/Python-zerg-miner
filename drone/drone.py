@@ -3,6 +3,11 @@
 from mining.zerg import Zerg
 import mining
 from .location import Location
+from mining.pathfind.path import (
+        area_to_graph,
+        shortest_path,
+        generate_cardinality
+)
 
 
 class Drone(Zerg):
@@ -19,9 +24,24 @@ class Drone(Zerg):
         self.current_map = None
         self.position = Location(0, 0)
         self.status = False
+        self.returning = False
+        self.pickup = False
         self.path_queue = None
         self.last_xy = None
         self.last_move = None
+
+    @property
+    def capacity(self):
+        return self._capacity
+
+    @capacity.setter
+    def capacity(self, cap):
+        self._capacity = cap
+        if self._capacity < 0:
+            graph = area_to_graph(self.current_map)
+            coords = shortest_path(graph, self.position.current, (0, 0))
+            self.path_queue = generate_cardinality(coords)
+            self.returning = True
 
     def action(self, context):
         '''
@@ -30,8 +50,7 @@ class Drone(Zerg):
         self.step_count += 1
         print(self.last_move)
         print(self.path_queue)
-        print(self.last_xy)
-        print(context.x, context.y)
+        print(self.returning)
         if self.last_xy is not None and self.last_xy != (context.x, context.y):
             # TODO: this might be sufficient for location updates
             directions = {
@@ -42,7 +61,8 @@ class Drone(Zerg):
             }
             move = directions[self.last_move]
             self.position.current = tuple(map(lambda x, y: x + y, self.position.current, move))
-        elif self.last_move is not None and self.path_queue is not None and self.last_xy == (context.x, context.y):
+        elif (self.last_move is not None and self.path_queue is not None and
+              self.last_xy == (context.x, context.y) and not self.returning):
             # Mining here
             self.capacity -= 1
             return self.last_move
@@ -54,26 +74,19 @@ class Drone(Zerg):
         if not self.path_queue:
             if context.north == ' ' and not self.current_map.is_explored(self.position.north):
                 self.last_move = 'NORTH'
-                print(self.last_move)
                 return 'NORTH'
             elif context.south == ' ' and not self.current_map.is_explored(self.position.south):
                 self.last_move = 'SOUTH'
-                print(self.last_move)
                 return 'SOUTH'
             elif context.east == ' ' and not self.current_map.is_explored(self.position.east):
                 self.last_move = 'EAST'
-                print(self.last_move)
                 return 'EAST'
             elif context.west == ' ' and not self.current_map.is_explored(self.position.west):
                 self.last_move = 'WEST'
-                print(self.last_move)
                 return 'WEST'
             else:
                 self.last_move = None
                 print("IDLE")
-                #self.path_count += 1
-                #if self.path_count > 5:
-                #    self.home_request = True
                 self.status = True
                 return 'CENTER'
         else:

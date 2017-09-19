@@ -36,11 +36,12 @@ class Overlord(Zerg):
         Entry point of action for Overlord. Context not currently used.
         '''
         print(str(list(self.maps.values())[0][1]))
-        ### TEMP ###
         for unit in list(self.zerg.values()):
             if unit.status:
                 unit.path_queue = self._generate_path(unit.current_map, unit.position.current)
                 unit.status = False
+            elif unit.returning:
+                return "RETURN {}".format(id(unit))
         #import random
         #act = random.randint(0, 3)
         #if act == 0:
@@ -51,7 +52,6 @@ class Overlord(Zerg):
         list(self.zerg.values())[0].current_map = list(self.maps.values())[0][1]  # TODO: fix this
         return "DEPLOY {} {}".format(list(self.zerg.keys())[0],
                 list(self.maps.keys())[0])
-        ### TEMP ###
 
     def _generate_drones(self, refined_minerals):
         '''Calculate quantities of drones to create'''
@@ -65,5 +65,6 @@ class Overlord(Zerg):
             coordinate_path = shortest_path(graph, current_position, (0, 0))
         else:
             coordinate_path = shortest_path(graph, current_position, mineral_coord)
+            home_path = shortest_path(graph, mineral_coord, (0, 0))
         print(coordinate_path)
         return generate_cardinality(coordinate_path)
