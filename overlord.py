@@ -19,11 +19,10 @@ class Overlord(Zerg):
         self.ticks = ticks
         self.refined_minerals = refined_minerals
         self.zerg = dict()  # TODO: @property this
-        ### TEMP ###
-        for _ in range(3):
+        while self.refined_minerals > 0:
+            self.refined_minerals -= Drone.get_init_cost()
             z = Drone()
             self.zerg[id(z)] = z
-        ### TEMP ###
 
     def add_map(self, map_id, summary):
         '''Adds an identifier for a map + (map mineral density, internal map)'''
