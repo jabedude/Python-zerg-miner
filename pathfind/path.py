@@ -57,6 +57,8 @@ def shortest_path(graph, start, goal):
         return None
 
 def generate_cardinality(coordinates):
+    if not coordinates:
+        return ['CENTER']
     directions = list()
     for coord, prev in zip(coordinates[1:], coordinates):
         if (prev[0], prev[1] + 1) == coord:
