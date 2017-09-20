@@ -42,8 +42,6 @@ class Overlord(Zerg):
                 unit.status = False
             elif unit.returning:
                 return "RETURN {}".format(id(unit))
-        #import random
-        #act = random.randint(0, 3)
         #if act == 0:
         #    return "RETURN {}".format(random.choice(list(self.zerg.keys())))
         #else:
