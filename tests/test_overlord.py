@@ -4,6 +4,7 @@ import unittest
 import sys
 sys.path.append("..")
 from mining import Overlord
+from mining.dashboard import Dashboard
 from mining.area import Area
 
 
@@ -23,3 +24,8 @@ class TestOverlord(unittest.TestCase):
         o = Overlord(ticks=100, refined_minerals=54)
         o.add_map(map_id, summary)
         self.assertIsInstance(o.maps[30000], Area)
+
+    def test_overlord_dashboard(self):
+        o = Overlord(ticks=100, refined_minerals=54)
+        db = o.dashboard()
+        self.assertInstance(db, Dashboard)
