@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
+'''This module implements the Area class used by Drones'''
 
 class Area:
+    '''Area is the internal "map" used by drones and overlords to see their map'''
 
     def __init__(self, *args):
         self._data = dict(args)
@@ -8,9 +10,11 @@ class Area:
         self._explored = list((0, 0))
 
     def is_explored(self, coordinates):
+        '''Returns a list of explored coordinates in the area'''
         return coordinates in self._explored
 
     def update(self, position, context):
+        '''Update area data with new data from drone'''
         self._explored.append(position.current)
         self._data[position.current] = 'Z'
         self._data[position.north] = context.north
@@ -19,6 +23,7 @@ class Area:
         self._data[position.south] = context.south
 
     def get(self, key):
+        '''Return the tile at coordinate 'key'. Defaults to "?"'''
         return self._data.get(key, "?")
 
     def find_tile(self, tile):

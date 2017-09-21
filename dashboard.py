@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
+'''Module implements the Dashboard class'''
 
 
 class Dashboard:
+    '''Dashboard represents the aggregate of Drone units' maps'''
 
     def __init__(self, map_list=None):
         self._data = map_list

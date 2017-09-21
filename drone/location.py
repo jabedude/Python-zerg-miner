@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
+'''This module implements the Location class'''
 
 class Location:
+    '''The Location class is used by Drone units to store their current and adjacent locations'''
 
     def __init__(self, x=0, y=0):
         self.x = x

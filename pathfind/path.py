@@ -1,23 +1,15 @@
 #!/usr/bin/env python3
+'''Module implements several helper functions used during pathfinding'''
+
 from math import hypot
-import copy
-
-
-class Path:
-
-    def __init__(self):
-        pass
-
-
-def recursive_path(goal, grid):
-    raise NotImplementedError
 
 def linear_distance(point_one, point_two):
+    '''Calucates the distance between two coordinates'''
     return hypot(point_one[0] - point_two[0], point_one[1] - point_two[1])
 
 def area_to_graph(area, goal=None):
+    '''Converts a zerg map to a graph using an adjacency list'''
     graph = dict()
-    #area = copy.deepcopy(area)
     if goal is not None:
         area[goal] = ' '
 
@@ -41,6 +33,7 @@ def area_to_graph(area, goal=None):
 
 def bfs_paths(graph, start, goal):
     '''http://eddmann.com/posts/depth-first-search-and-breadth-first-search-in-python/'''
+    # TODO: add documentation here
     queue = [(start, [start])]
     while queue:
         (vertex, path) = queue.pop(0)
@@ -51,12 +44,14 @@ def bfs_paths(graph, start, goal):
                 queue.append((next, path + [next]))
 
 def shortest_path(graph, start, goal):
+    '''Return the shortest path from a generator of paths'''
     try:
         return next(bfs_paths(graph, start, goal))
     except StopIteration:
         return None
 
 def generate_cardinality(coordinates):
+    '''Convert a set of coordinate instructions to compass directions'''
     if not coordinates:
         return ['CENTER']
     directions = list()

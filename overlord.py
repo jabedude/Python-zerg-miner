@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+'''This module implements the Overlord class'''
 
 from mining.zerg import Zerg
 from mining.drone.drone import Drone
@@ -12,6 +13,10 @@ from mining.pathfind.path import (
 
 
 class Overlord(Zerg):
+    '''
+    The Overlord class spawns, deploys, and picks up Drones. It is responsible for
+    sending drones a path to a mineral patch to mine.
+    '''
 
     maps = dict()
 
@@ -64,8 +69,8 @@ class Overlord(Zerg):
         raise NotImplementedError
 
     def _generate_path(self, zerg_map, current_position):
+        '''Calculate a path from a zerg map + position to a mineral field'''
         mineral_coord = zerg_map.find_tile("*")
-        # TODO: if no min_coord, return HOME
         graph = area_to_graph(zerg_map, goal=mineral_coord)
         if not mineral_coord:
             coordinate_path = shortest_path(graph, current_position, (0, 0))

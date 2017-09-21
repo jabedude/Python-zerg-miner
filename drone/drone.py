@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+'''This module implements the Drone base, Scout, and Miner classes of Drones'''
 
 from mining.zerg import Zerg
 import mining
@@ -11,6 +12,7 @@ from mining.pathfind.path import (
 
 
 class Drone(Zerg):
+    '''Drone is the base class of drone used by overlords to mine minerals.'''
 
     health_points = 40
     carrying_capacity = 10
@@ -58,7 +60,7 @@ class Drone(Zerg):
         '''
         Entry point of action for Drone unit. Context information about surrounding tiles.
         '''
-        print(id(self))
+        #print(id(self))
         #print(self.path_queue)
         #print(self.returning)
         #print(self.status)
@@ -123,6 +125,7 @@ class Drone(Zerg):
 
 
 class Scout(Drone):
+    '''Scouts are specialized Drones that have higher movement points than the parent class'''
 
     health_points = 20
     carrying_capacity = 5
@@ -136,6 +139,7 @@ class Scout(Drone):
 
 
 class Miner(Drone):
+    '''Miner are specialized Drones that have higher carrying capacity than the parent class'''
 
     health_points = 10
     carrying_capacity = 15
