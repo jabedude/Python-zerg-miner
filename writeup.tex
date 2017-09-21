@@ -1,7 +1,7 @@
 \documentclass{article}
-
+\usepackage{tikz}
+\usetikzlibrary{positioning}
 \begin{document}
-
 
 
 \centerline{\sc \large Phase Two Capstone Writeup}
@@ -79,12 +79,30 @@ The project is a Python package, composed of several modules and tests:
 	\item [$\cdot$] \textit{runtest.sh + runlinter.sh}: These are bash
 	scripts to run unit tests and the pep8 linter utility.
 \end{itemize}
-However, a double carriage-return is read as a paragraph break.
 
-Like this.  But any carriage-returns after the first two will be 
-completely ignored; 
+\begin{flushleft}
+\textbf{Data Flow:}
+\vspace{.5pc}
+\end{flushleft}
 
+\begin{tikzpicture}[auto, node distance=3cm]
+    \tikzstyle{block} = [draw, rectangle];
+    \tikzstyle{rblock}=[draw, shape=rectangle,rounded corners=0.5em];
+    \tikzstyle{line}=[-latex];
+    \node [rblock] (a) {Begin Exploring};
+    \node [rblock,right=of a] (acquire) {Acquire Image};
+    \draw[line] (a) -- (acquire);
+\end{tikzpicture}
 
-
+The Overlord spawns the Drones that it can afford with it's refined 
+minerals.  These Drones are then deployed to each map and begin exploring.
+Drones explore by following a simple set of rules: if an adjacent tile is
+both unexplored and passable, it will move there. Each time a Drone moves
+it updates it's internal representation of the map. When the drone is
+finished exploring it sets a flag that signals it is ready to mine.  The 
+Overlord polls every deployed Drone and monitors the status of their flags.
+When a Drone signals it is ready to mine, the Overlord converts the Drone's
+map into an adjacency list and performs a breadth-first-search to generate 
+a path to a mineral field to mine.
 
 \end{document}
