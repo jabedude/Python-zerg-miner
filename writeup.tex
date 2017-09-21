@@ -1,0 +1,90 @@
+\documentclass{article}
+
+\begin{document}
+
+
+
+\centerline{\sc \large Phase Two Capstone Writeup}
+\vspace{.5pc}
+
+\begin{flushleft}
+\textbf{Name:} Joshua Abraham
+\vspace{.5pc}
+
+\textbf{Date:} 21 SEP 2017
+\vspace{.5pc}
+
+\textbf{Current Module:} Phase Two Capstone
+\vspace{.5pc}
+
+\textbf{Project Name:} "Mining"
+\vspace{.5pc}
+
+\textbf{Project Goals:}
+\vspace{.5pc}
+\end{flushleft}
+
+This project was quite large and involved many modules, classes, and unit
+tests to create a package that implements an Overlord and Drones to mine
+minerals from a map. The Overlord and it's drones operate in a simulation
+that uses 'ticks' to denote discrete units of time. The simulation begins
+with a limited number of 'refined minerals' which are used to spawn Drones,
+who scout and mine the map.
+
+\begin{flushleft}
+\textbf{Considerations:}
+\vspace{.5pc}
+\end{flushleft}
+
+\begin{itemize}
+	\item[$\bullet$] The project should make use of concepts learned during
+	phase two.
+	\item[$\bullet$] The 'mining' package must instantiate an Overlord and
+	at least two subclasses of Drone.
+	\item[$\bullet$] All Zerg units must have health (minimum of 1) and an
+	action method that takes a map context as a parameter.
+	\item[$\bullet$] All code in the package must follow the PEP8 guidelines.
+	\item[$\bullet$] No work should be performed in the 'master' branch.
+	\item[$\bullet$] The Overlord class has 1 second to perform it's action
+	method, while the Drones have 1 millisecond.
+\end{itemize}
+
+\begin{flushleft}
+\textbf{Initial Design:}
+\vspace{.5pc}
+\end{flushleft}
+
+The project is a Python package, composed of several modules and tests:
+\begin{itemize}
+	\item [$\cdot$] \textit{area.py}: This module contains the Area class
+	that is used by drones to represent their view of their map.
+	\item [$\cdot$] \textit{dashboard.py}: This module contains the
+	Dashboard class that represents all three maps in the simulation.
+	\item [$\cdot$] \textit{overlord.py}: This module contains the
+	Overlord class that is responsible for creating, deploying, and 
+	returning Drones. The Overlord also commands Drones to mine minerals.
+	\item [$\cdot$] \textit{drone/}: This directory contains the drone and 
+	location modules.
+	\item [$\cdot$] \textit{drone.py}: This file contains the Drone, Scout,
+	and Miner classes of drone units. 
+	\item [$\cdot$] \textit{location.py}: This file contains the Location
+	class, which is used by drones to store their current and adjacent 
+	tiles.
+	\item [$\cdot$] \textit{path.py}: This file contains functions used by
+	the Overlord and Drone classes during pathfinding.
+	\item [$\cdot$] \textit{zerg.py}: This file contains the abstract class
+	Zerg from which Drones and Overlord inherit from.
+	\item [$\cdot$] \textit{tests/}: This directory contains unit tests for
+	the package.
+	\item [$\cdot$] \textit{runtest.sh + runlinter.sh}: These are bash
+	scripts to run unit tests and the pep8 linter utility.
+\end{itemize}
+However, a double carriage-return is read as a paragraph break.
+
+Like this.  But any carriage-returns after the first two will be 
+completely ignored; 
+
+
+
+
+\end{document}
