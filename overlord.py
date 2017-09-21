@@ -16,39 +16,43 @@ class Overlord(Zerg):
 
     def __init__(self, ticks, refined_minerals):
         super().__init__()
+        self.map_list = list()
+        self.zerg_list = list()
         self.ticks = ticks
         self.refined_minerals = refined_minerals
         self.zerg = dict()  # TODO: @property this
         while self.refined_minerals > 0:
             self.refined_minerals -= Drone.get_init_cost()
             z = Drone()
+            self.zerg_list.append(id(z))
             self.zerg[id(z)] = z
 
     def add_map(self, map_id, summary):
         '''Adds an identifier for a map + (map mineral density, internal map)'''
         internal_map = Area()
         internal_map.map_id = map_id
-        self.maps[map_id] = (summary, internal_map)
+        self.map_list.append(map_id)
+        self.maps[map_id] = internal_map
 
     def action(self, context):
         '''
         Entry point of action for Overlord. Context not currently used.
         '''
-        print(str(list(self.maps.values())[0][1]))
+        #print(str(list(self.maps.values())[0]))
         for unit in list(self.zerg.values()):
             if unit.status:
                 unit.path_queue = self._generate_path(unit.current_map, unit.position.current)
                 unit.status = False
             elif unit.returning:
+                unit.returning = False
                 return "RETURN {}".format(id(unit))
-        #if act == 0:
-        #    return "RETURN {}".format(random.choice(list(self.zerg.keys())))
-        #else:
-        #    return "DEPLOY {} {}".format(random.choice(list(self.zerg.keys())),
-        #            random.choice(list(self.maps.keys())))
-        list(self.zerg.values())[0].current_map = list(self.maps.values())[0][1]  # TODO: fix this
-        return "DEPLOY {} {}".format(list(self.zerg.keys())[0],
-                list(self.maps.keys())[0])
+        if self.zerg_list and self.map_list:
+            curr_zerg = self.zerg_list.pop(0)
+            curr_map = self.map_list.pop(0)
+            self.zerg[curr_zerg].current_map = self.maps[curr_map]
+            return "DEPLOY {} {}".format(curr_zerg, curr_map)
+        else:
+            return 'NONE'
 
     def _generate_drones(self, refined_minerals):
         '''Calculate quantities of drones to create'''
@@ -63,5 +67,4 @@ class Overlord(Zerg):
         else:
             coordinate_path = shortest_path(graph, current_position, mineral_coord)
             home_path = shortest_path(graph, mineral_coord, (0, 0))
-        print(coordinate_path)
         return generate_cardinality(coordinate_path)

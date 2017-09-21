@@ -24,11 +24,21 @@ class Drone(Zerg):
         self.current_map = None
         self.position = Location(0, 0)
         self.status = False
+        self.deployed = False
         self.returning = False
         self.pickup = False
         self.path_queue = None
         self.last_xy = None
         self.last_move = None
+
+    @property
+    def current_map(self):
+        return self._current_map
+
+    @current_map.setter
+    def current_map(self, zerg_map):
+        self._current_map = zerg_map
+        self.deployed = True
 
     @property
     def capacity(self):
@@ -41,17 +51,18 @@ class Drone(Zerg):
             graph = area_to_graph(self.current_map)
             coords = shortest_path(graph, self.position.current, (0, 0))
             self.path_queue = generate_cardinality(coords)
+            self.status = False
             self.returning = True
 
     def action(self, context):
         '''
         Entry point of action for Drone unit. Context information about surrounding tiles.
         '''
-        print(self.last_move)
-        print(self.path_queue)
-        print(self.returning)
+        #print(id(self))
+        #print(self.path_queue)
+        #print(self.returning)
+        #print(self.status)
         if self.last_xy is not None and self.last_xy != (context.x, context.y):
-            # TODO: this might be sufficient for location updates
             directions = {
                 'NORTH': (0, 1),
                 'SOUTH': (0, -1),
@@ -70,8 +81,7 @@ class Drone(Zerg):
         self.current_map.update(self.position, context)
         self.last_xy = (context.x, context.y)
 
-        ### TEMP ###
-        if not self.path_queue:
+        if not self.path_queue and not self.returning:
             if context.north == ' ' and not self.current_map.is_explored(self.position.north):
                 self.last_move = 'NORTH'
                 return 'NORTH'
@@ -86,14 +96,19 @@ class Drone(Zerg):
                 return 'WEST'
             else:
                 self.last_move = None
-                print("IDLE")
+                #print("IDLE")
                 self.status = True
                 return 'CENTER'
-        else:
-            print(self.path_queue)
+        elif self.path_queue:
+            #print(self.path_queue)
+            if self.capacity < 0:
+                self.returning = True
             self.last_move = self.path_queue[0]
             return self.path_queue.pop(0)
-        ### TEMP ###
+        else:
+            self.status = False
+            self.returning = False
+            return 'CENTER'
 
     def steps(self):
         '''Return the number of steps taken by drone'''
