@@ -3,6 +3,7 @@
 from mining.zerg import Zerg
 from mining.drone.drone import Drone
 from mining.area import Area
+from mining.dashboard import Dashboard
 from mining.pathfind.path import (
         area_to_graph,
         shortest_path,
@@ -53,6 +54,10 @@ class Overlord(Zerg):
             return "DEPLOY {} {}".format(curr_zerg, curr_map)
         else:
             return 'NONE'
+
+    def dashboard(self):
+        '''Returns a Dashboard object with drone POV'''
+        return Dashboard()
 
     def _generate_drones(self, refined_minerals):
         '''Calculate quantities of drones to create'''
