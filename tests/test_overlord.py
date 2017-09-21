@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 
 import unittest
-import sys
-sys.path.append("..")
 from mining import Overlord
 from mining.dashboard import Dashboard
 from mining.area import Area

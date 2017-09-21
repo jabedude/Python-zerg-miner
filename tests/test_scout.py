@@ -2,10 +2,8 @@
 
 import unittest
 from unittest import mock
-import sys
-sys.path.append("..")
 from overlord import Overlord
-from drone.drone import Scout
+from mining.drone.drone import Scout
 
 
 class TestScout(unittest.TestCase):

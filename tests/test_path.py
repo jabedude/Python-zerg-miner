@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 
 import unittest
-import sys
-sys.path.append("..")
-from pathfind import path
-from area import Area
+from mining.pathfind import path
+from mining.area import Area
 
 
 class TestPath(unittest.TestCase):
