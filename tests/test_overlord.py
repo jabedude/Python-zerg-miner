@@ -28,4 +28,4 @@ class TestOverlord(unittest.TestCase):
     def test_overlord_dashboard(self):
         o = Overlord(ticks=100, refined_minerals=54)
         db = o.dashboard()
-        self.assertInstance(db, Dashboard)
+        self.assertIsInstance(db, Dashboard)
