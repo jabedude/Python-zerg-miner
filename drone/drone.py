@@ -58,7 +58,7 @@ class Drone(Zerg):
         '''
         Entry point of action for Drone unit. Context information about surrounding tiles.
         '''
-        #print(id(self))
+        print(id(self))
         #print(self.path_queue)
         #print(self.returning)
         #print(self.status)
