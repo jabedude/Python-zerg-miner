@@ -1,5 +1,6 @@
 \documentclass{article}
 \usepackage{tikz}
+\usepackage[margin=1in]{geometry}
 \usetikzlibrary{positioning}
 \begin{document}
 
@@ -79,20 +80,25 @@ The project is a Python package, composed of several modules and tests:
 	\item [$\cdot$] \textit{runtest.sh + runlinter.sh}: These are bash
 	scripts to run unit tests and the pep8 linter utility.
 \end{itemize}
+\vspace{5mm}
 
 \begin{flushleft}
 \textbf{Data Flow:}
 \vspace{.5pc}
 \end{flushleft}
 
-\begin{tikzpicture}[auto, node distance=3cm]
+\begin{tikzpicture}[auto, node distance=1cm]
     \tikzstyle{block} = [draw, rectangle];
-    \tikzstyle{rblock}=[draw, shape=rectangle,rounded corners=0.5em];
+    \tikzstyle{rblock}=[draw, shape=rectangle,rounded corners=0.5em,
+    text width=4.5cm, align=center];
     \tikzstyle{line}=[-latex];
     \node [rblock] (a) {Begin Exploring};
-    \node [rblock,right=of a] (acquire) {Acquire Image};
-    \draw[line] (a) -- (acquire);
+    \node [rblock,right=of a] (b) {Acquire minerals};
+    \node [rblock,right=of b] (c) {Return to deployment zone};
+    \draw[line] (a) -- (b);
+    \draw[line] (b) -- (c);
 \end{tikzpicture}
+\vspace{5mm}
 
 The Overlord spawns the Drones that it can afford with it's refined 
 minerals.  These Drones are then deployed to each map and begin exploring.
@@ -103,6 +109,59 @@ finished exploring it sets a flag that signals it is ready to mine.  The
 Overlord polls every deployed Drone and monitors the status of their flags.
 When a Drone signals it is ready to mine, the Overlord converts the Drone's
 map into an adjacency list and performs a breadth-first-search to generate 
-a path to a mineral field to mine.
+a path to a mineral field to mine.  The Overlord gives this path to the 
+Drone, who carries them out. This process repeats until the Drone's 
+carrying capacity is depleted.  The Drone then generates a path back to the
+deployment zone and returns home.  The Drone sets it's returning flag and
+when the Overlord sees this flag, it returns the unit.
+
+\begin{flushleft}
+\textbf{Communications Protocol:}
+\vspace{.5pc}
+\end{flushleft}
+
+The Overlord and Drones "communicated" via setting attributes.  No other 
+communications were used in this project.
+
+\begin{flushleft}
+\textbf{Potential Pitfalls:}
+\vspace{.5pc}
+\end{flushleft}
+
+\begin{itemize}
+	\item[$\bullet$] Having too much logic in the Drone and causing 
+	timeouts.
+	\item[$\bullet$] Deeply nested if..else statements for path decision
+	making. (Especially for readability)
+	\item[$\bullet$] 
+\end{itemize}
+
+\begin{flushleft}
+\textbf{Test Plan:}
+\vspace{.5pc}
+\end{flushleft}
+
+\textit{User Tests:}
+\begin{itemize}
+	\item[$\cdot$] Use the started code provided by instructor to "drive"
+	package.
+	\item[$\cdot$] Run the \textit{world.py} starter file with various
+	values for ticks, and refined minerals.
+	\item[$\cdot$] 
+\end{itemize}
+
+\textit{Test Cases:}
+\begin{itemize}
+	\item[$\cdot$] Unit tests for every class and method. (where feasibly 
+	posible)
+	\item[$\cdot$] Test inter-object communication.
+	\item[$\cdot$] 
+\end{itemize}
+
+\begin{flushleft}
+\textbf{Conclusion:}
+\vspace{.5pc}
+\end{flushleft}
+
 
 \end{document}
