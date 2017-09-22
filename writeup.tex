@@ -32,6 +32,7 @@ minerals from a map. The Overlord and it's drones operate in a simulation
 that uses 'ticks' to denote discrete units of time. The simulation begins
 with a limited number of 'refined minerals' which are used to spawn Drones,
 who scout and mine the map.
+\vspace{.5pc}
 
 \begin{flushleft}
 \textbf{Considerations:}
@@ -50,6 +51,7 @@ who scout and mine the map.
 	\item[$\bullet$] The Overlord class has 1 second to perform it's action
 	method, while the Drones have 1 millisecond.
 \end{itemize}
+\vspace{.5pc}
 
 \begin{flushleft}
 \textbf{Initial Design:}
@@ -81,7 +83,7 @@ The project is a Python package, composed of several modules and tests:
 	\item [$\cdot$] \textit{runtest.sh + runlinter.sh}: These are bash
 	scripts to run unit tests and the pep8 linter utility.
 \end{itemize}
-\vspace{5mm}
+\vspace{2mm}
 
 \begin{flushleft}
 \textbf{Data Flow:}
@@ -93,7 +95,7 @@ The project is a Python package, composed of several modules and tests:
 \begin{tikzpicture}[auto, node distance=1cm]
     \tikzstyle{block} = [draw, rectangle];
     \tikzstyle{decision} = [diamond, draw, fill=blue!20, 
-    text width=4.5em, text badly centered, node distance=2cm, inner sep=0pt]
+    text width=6em, text badly centered, node distance=1cm, inner sep=0pt]
     \tikzstyle{rblock}=[draw, shape=rectangle,rounded corners=0.5em,
     text width=4.5cm, align=center];
     \tikzstyle{line}=[-latex];
@@ -108,84 +110,24 @@ The project is a Python package, composed of several modules and tests:
 \vspace{5mm}
 
 The Overlord spawns the Drones that it can afford with it's refined 
-minerals.  These Drones are then deployed to each map and begin exploring.
-Drones explore by following a simple set of rules: if an adjacent tile is
-both unexplored and passable, it will move there. Each time a Drone moves
-it updates it's internal representation of the map. When the drone is
-finished exploring it sets a flag that signals it is ready to mine.  The 
-Overlord polls every deployed Drone and monitors the status of their flags.
-When a Drone signals it is ready to mine, the Overlord converts the Drone's
-map into an adjacency list and performs a breadth-first-search to generate 
-a path to a mineral field to mine.  The Overlord gives this path to the 
-Drone, who carries them out. This process repeats until the Drone's 
-carrying capacity is depleted.  The Drone then generates a path back to the
-deployment zone and returns home.  The Drone sets it's returning flag and
-when the Overlord sees this flag, it returns the unit.
-
-\begin{flushleft}
-\textbf{Communications Protocol:}
-\vspace{.5pc}
-\end{flushleft}
-
-The Overlord and Drones "communicated" via setting attributes.  No other 
-communications were used in this project.
-
-\begin{flushleft}
-\textbf{Potential Pitfalls:}
-\vspace{.5pc}
-\end{flushleft}
-
-\begin{itemize}
-	\item[$\bullet$] Having too much logic in the Drone and causing 
-	timeouts.
-	\item[$\bullet$] Deeply nested if..else statements for path decision
-	making. (Especially for readability)
-	\item[$\bullet$] 
-\end{itemize}
-
-\begin{flushleft}
-\textbf{Test Plan:}
-\vspace{.5pc}
-\end{flushleft}
-
-\textit{User Tests:}
-\begin{itemize}
-	\item[$\cdot$] Use the started code provided by instructor to "drive"
-	package.
-	\item[$\cdot$] Run the \textit{world.py} starter file with various
-	values for ticks, and refined minerals.
-	\item[$\cdot$] 
-\end{itemize}
-
-\textit{Test Cases:}
-\begin{itemize}
-	\item[$\cdot$] Unit tests for every class and method. (where feasibly 
-	posible)
-	\item[$\cdot$] Test inter-object communication.
-	\item[$\cdot$] 
-\end{itemize}
-
-\begin{flushleft}
-\textbf{Conclusion:}
-\vspace{.5pc}
-\end{flushleft}
-
+minerals.  These Drones are then deployed to each map and begin exploring.  
+They follow the basic steps in figure 1.
 
 \begin{center}
 \begin{equation}
 \begin{tikzpicture}[node distance = 2cm, auto]
     \tikzstyle{decision} = [diamond, draw, fill=yellow!20, 
-    text width=4.5em, text badly centered, node distance=3cm, inner sep=0pt]
+    text width=4.5em, text badly centered, node distance=2.3cm, inner sep=0pt]
     \tikzstyle{block} = [rectangle, draw, fill=blue!20, 
-    text width=5em, text centered, rounded corners, minimum height=4em]
+    text width=11em, text centered, rounded corners, minimum height=3em]
     \tikzstyle{line} = [draw, -latex']
     \tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=3cm,
     minimum height=2em]
     \node [block] (deploy) {Drone deployed};
-    \node [cloud, right of=deploy] (overlord) {Overlord};
+    \node [cloud, right of=deploy, node distance=5cm] (overlord) {Overlord};
     \node [block, below of=deploy] (identify) {Move to passable tile};
     \node [block, below of=identify] (evaluate) {Update map with context};
-    \node [block, left of=evaluate, node distance=3cm] (update) {Continue 
+    \node [block, left of=evaluate, node distance=5cm] (update) {Continue 
     exploring};
     \node [decision, below of=evaluate] (decide) {An unexplored tile 
     adjacent?};
@@ -195,7 +137,7 @@ communications were used in this project.
     mineral tile};
     \node [decision, below of=minepath] (keepmining) {Carrying capacity
     left?};
-    \node [block, left of=minepath, node distance=3cm] (anotherpath)
+    \node [block, left of=minepath, node distance=5cm] (anotherpath)
     {Continue exploring};
     \node [block, below of=keepmining, node distance=3cm] (return) {Return home};
     \path [line] (deploy) -- (identify);
@@ -208,11 +150,118 @@ communications were used in this project.
     \path [line] (decide) -- node {no}(request);
     \path [line,dashed] (overlord) |- node [midway,below] {BFS path} 
     (request);
+        \path [line,dashed] (overlord) |- node [midway,below] {BFS path} 
+    (keepmining);
     \path [line] (keepmining) -| node [near start] {yes} (anotherpath);
     \path [line] (anotherpath) |- (request);
     \path [line] (keepmining) -- node {no}(return);
 \end{tikzpicture}
 \end{equation}
 \end{center}
+
+
+Drones explore by following a simple set of rules: if an adjacent tile is
+both unexplored and passable, it will move there. Each time a Drone moves
+it updates it's internal representation of the map. When the drone is
+finished exploring it sets a flag that signals it is ready to mine.  
+The next steps are shown in figure 2.
+The Overlord polls every deployed Drone and monitors the status of their 
+flags.
+When a Drone signals it is ready to mine, the Overlord converts the Drone's
+map into an adjacency list and performs a breadth-first-search to generate 
+a path to a mineral field to mine.  The Overlord selects this field with a 
+naive linear distance calculation:
+\[
+d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2} 
+\]
+The Overlord gives this path to the Drone, who carries them out. This process 
+repeats until the Drone's carrying capacity is depleted.  The Drone then 
+generates a path back to the deployment zone and returns home.  The Drone 
+sets it's returning flag and when the Overlord sees this flag, it returns the 
+unit.
+\vspace{.5pc}
+
+\begin{flushleft}
+\textbf{Communications Protocol:}
+\vspace{.5pc}
+\end{flushleft}
+
+The Overlord and Drones "communicated" via setting attributes.  No other 
+communications were used in this project.
+\vspace{.5pc}
+
+\begin{flushleft}
+\textbf{Potential Pitfalls:}
+\vspace{.5pc}
+\end{flushleft}
+
+\begin{itemize}
+	\item[$\bullet$] Having too much logic in the Drone and causing 
+	timeouts.
+	\item[$\bullet$] Deeply nested if..else statements for path decision
+	making. (Especially for readability)
+	\item[$\bullet$] Conforming to PEP8.
+	\item[$\bullet$] Pathfinding algorithm running in time constraints. (1s
+	for the Overlord, and 1ms for the Drones)	
+\end{itemize}
+\vspace{.5pc}
+
+\begin{flushleft}
+\textbf{Test Plan:}
+\vspace{.5pc}
+\end{flushleft}
+
+\textit{User Tests:}
+\begin{itemize}
+	\item[$\cdot$] Use the started code provided by instructor to "drive"
+	package.
+	\item[$\cdot$]Run the \textit{world.py} starter file with various
+	values for ticks, and refined minerals.
+	\item[$\cdot$] Run \textit{world.py} with user defined maps.
+\end{itemize}
+
+\textit{Test Cases:}
+\begin{itemize}
+	\item[$\cdot$] Unit tests for every class and method. (where feasibly 
+	posible)
+	\item[$\cdot$] Test inter-object communication.
+	\item[$\cdot$] Test path finding with a given map and goal.
+\end{itemize}
+\vspace{.5pc}
+
+\begin{flushleft}
+\textbf{Conclusion:}
+\vspace{.5pc}
+\end{flushleft}
+
+The 'mining' capstone has been both interesting and challenging.  I learned 
+many lessons while designing and creating the package.  This was my first 
+time using Python's abstract base class, and I used it to create the Zerg
+base class because 1. It will never be instantiated and 2. Both overlords and 
+drones must implement certain shared methods and attributes so it made sense
+to create an abstract class from which they both would inherit.  I also 
+learned a great deal about inheritance versus composition.  The Area class
+originally was a child class of 'dict', but I wanted more control over what
+I was inheriting so I switched the implementation to contain a dictionary.  
+This project also allowed me to gain a deeper understanding of 'dunder' 
+methods.  For example, I used '\_\_contains\_\_()' in my Area class so that I 
+could use the 'in' keyword to determine whether a certain tile had been 
+discovered in a given Area.  I also made use of Test Driven Development, and 
+wrote unit tests before starting to implement a given requirement.  This was
+an immense aid both during the initial implementation and while experimenting
+later on.  Lastly, using the '@property' and setters/getters where needed 
+made monitoring attribute values very simple.
+
+There are aspects of the project that I would like to improve on if I had 
+more time.  Instead of using a breadth-first-search to generate paths, I 
+would like to implement A*.  This would be an improvement because I could
+assign a cost to moving over an acid tile, instead of not allowing moves over
+acid.  I would also like to improve my Drone exploration logic.  With A* I 
+would find a path to unexplored parts of the map.  
+
+This capstone was a challenge to implement but I was able to do so 
+successfully.  I enjoyed researching various path-finding algorithms and am
+happy with the choices I made.  I learned quite a bit about python classes,
+unit testing, and data structures while designing this project.
 
 \end{document}
