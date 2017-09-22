@@ -2,6 +2,7 @@
 \usepackage{tikz}
 \usepackage[margin=1in]{geometry}
 \usetikzlibrary{positioning}
+\usetikzlibrary{shapes, arrows}
 \begin{document}
 
 
@@ -87,8 +88,12 @@ The project is a Python package, composed of several modules and tests:
 \vspace{.5pc}
 \end{flushleft}
 
+\begin{center}
+\begin{equation}
 \begin{tikzpicture}[auto, node distance=1cm]
     \tikzstyle{block} = [draw, rectangle];
+    \tikzstyle{decision} = [diamond, draw, fill=blue!20, 
+    text width=4.5em, text badly centered, node distance=2cm, inner sep=0pt]
     \tikzstyle{rblock}=[draw, shape=rectangle,rounded corners=0.5em,
     text width=4.5cm, align=center];
     \tikzstyle{line}=[-latex];
@@ -98,6 +103,8 @@ The project is a Python package, composed of several modules and tests:
     \draw[line] (a) -- (b);
     \draw[line] (b) -- (c);
 \end{tikzpicture}
+\end{equation}
+\end{center}
 \vspace{5mm}
 
 The Overlord spawns the Drones that it can afford with it's refined 
@@ -163,5 +170,49 @@ communications were used in this project.
 \vspace{.5pc}
 \end{flushleft}
 
+
+\begin{center}
+\begin{equation}
+\begin{tikzpicture}[node distance = 2cm, auto]
+    \tikzstyle{decision} = [diamond, draw, fill=yellow!20, 
+    text width=4.5em, text badly centered, node distance=3cm, inner sep=0pt]
+    \tikzstyle{block} = [rectangle, draw, fill=blue!20, 
+    text width=5em, text centered, rounded corners, minimum height=4em]
+    \tikzstyle{line} = [draw, -latex']
+    \tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=3cm,
+    minimum height=2em]
+    \node [block] (deploy) {Drone deployed};
+    \node [cloud, right of=deploy] (overlord) {Overlord};
+    \node [block, below of=deploy] (identify) {Move to passable tile};
+    \node [block, below of=identify] (evaluate) {Update map with context};
+    \node [block, left of=evaluate, node distance=3cm] (update) {Continue 
+    exploring};
+    \node [decision, below of=evaluate] (decide) {An unexplored tile 
+    adjacent?};
+    \node [block, below of=decide, node distance=3cm] (request) {Request path
+    to mineral};
+    \node [block, below of=request] (minepath) {Mine 
+    mineral tile};
+    \node [decision, below of=minepath] (keepmining) {Carrying capacity
+    left?};
+    \node [block, left of=minepath, node distance=3cm] (anotherpath)
+    {Continue exploring};
+    \node [block, below of=keepmining, node distance=3cm] (return) {Return home};
+    \path [line] (deploy) -- (identify);
+    \path [line] (identify) -- (evaluate);
+    \path [line] (evaluate) -- (decide);
+    \path [line] (request) -- (minepath);
+    \path [line] (minepath) -- (keepmining);
+    \path [line] (decide) -| node [near start] {yes} (update);
+    \path [line] (update) |- (identify);
+    \path [line] (decide) -- node {no}(request);
+    \path [line,dashed] (overlord) |- node [midway,below] {BFS path} 
+    (request);
+    \path [line] (keepmining) -| node [near start] {yes} (anotherpath);
+    \path [line] (anotherpath) |- (request);
+    \path [line] (keepmining) -- node {no}(return);
+\end{tikzpicture}
+\end{equation}
+\end{center}
 
 \end{document}
