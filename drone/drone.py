@@ -58,12 +58,9 @@ class Drone(Zerg):
 
     def action(self, context):
         '''
-        Entry point of action for Drone unit. Context information about surrounding tiles.
+        Entry point of action for Drone unit. Context information about
+        surrounding tiles.
         '''
-        #print(id(self))
-        #print(self.path_queue)
-        #print(self.returning)
-        #print(self.status)
         if self.last_xy is not None and self.last_xy != (context.x, context.y):
             directions = {
                 'NORTH': (0, 1),
@@ -72,7 +69,9 @@ class Drone(Zerg):
                 'WEST': (-1, 0)
             }
             move = directions[self.last_move]
-            self.position.current = tuple(map(lambda x, y: x + y, self.position.current, move))
+            self.position.current = tuple(map(lambda x, y: x + y,
+                                              self.position.current,
+                                              move))
             self.step_count += 1
         elif (self.last_move is not None and self.path_queue is not None and
               self.last_xy == (context.x, context.y) and not self.returning):
@@ -84,25 +83,27 @@ class Drone(Zerg):
         self.last_xy = (context.x, context.y)
 
         if not self.path_queue and not self.returning:
-            if context.north == ' ' and not self.current_map.is_explored(self.position.north):
+            if (context.north == ' ' and not
+                    self.current_map.is_explored(self.position.north)):
                 self.last_move = 'NORTH'
                 return 'NORTH'
-            elif context.south == ' ' and not self.current_map.is_explored(self.position.south):
+            elif (context.south == ' ' and not
+                    self.current_map.is_explored(self.position.south)):
                 self.last_move = 'SOUTH'
                 return 'SOUTH'
-            elif context.east == ' ' and not self.current_map.is_explored(self.position.east):
+            elif (context.east == ' ' and not
+                    self.current_map.is_explored(self.position.east)):
                 self.last_move = 'EAST'
                 return 'EAST'
-            elif context.west == ' ' and not self.current_map.is_explored(self.position.west):
+            elif (context.west == ' ' and not
+                    self.current_map.is_explored(self.position.west)):
                 self.last_move = 'WEST'
                 return 'WEST'
             else:
                 self.last_move = None
-                #print("IDLE")
                 self.status = True
                 return 'CENTER'
         elif self.path_queue:
-            #print(self.path_queue)
             if self.capacity < 0:
                 self.returning = True
             self.last_move = self.path_queue[0]
@@ -125,7 +126,10 @@ class Drone(Zerg):
 
 
 class Scout(Drone):
-    '''Scouts are specialized Drones that have higher movement points than the parent class'''
+    '''
+    Scouts are specialized Drones that have higher movement points than the
+    parent class
+    '''
 
     health_points = 20
     carrying_capacity = 5
@@ -139,7 +143,10 @@ class Scout(Drone):
 
 
 class Miner(Drone):
-    '''Miner are specialized Drones that have higher carrying capacity than the parent class'''
+    '''
+    Miner are specialized Drones that have higher carrying capacity than the
+    parent class
+    '''
 
     health_points = 10
     carrying_capacity = 15

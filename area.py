@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 '''This module implements the Area class used by Drones'''
 
+
 class Area:
-    '''Area is the internal "map" used by drones and overlords to see their map'''
+    '''
+    Area is the internal "map" used by drones and overlords to see their map
+    '''
 
     def __init__(self, *args):
         self._data = dict(args)
@@ -50,10 +53,10 @@ class Area:
     def __str__(self):
         # TODO: @property these attributes
         data = list(self._data.keys())
-        min_x = min(data, key=lambda x: x[0], default=(0,0))[0]
-        min_y = min(data, key=lambda x: x[1], default=(0,0))[1]
-        max_x = max(data, key=lambda x: x[0], default=(0,0))[0]
-        max_y = max(data, key=lambda x: x[1], default=(0,0))[1]
+        min_x = min(data, key=lambda x: x[0], default=(0, 0))[0]
+        min_y = min(data, key=lambda x: x[1], default=(0, 0))[1]
+        max_x = max(data, key=lambda x: x[0], default=(0, 0))[0]
+        max_y = max(data, key=lambda x: x[1], default=(0, 0))[1]
 
         ret = ''
         for y_coord in range(int(min_y), int(max_y) + 1):

@@ -14,8 +14,8 @@ from mining.pathfind.path import (
 
 class Overlord(Zerg):
     '''
-    The Overlord class spawns, deploys, and picks up Drones. It is responsible for
-    sending drones a path to a mineral patch to mine.
+    The Overlord class spawns, deploys, and picks up Drones. It is responsible
+    for sending drones a path to a mineral patch to mine.
     '''
 
     maps = dict()
@@ -34,7 +34,9 @@ class Overlord(Zerg):
             self.zerg[id(z)] = z
 
     def add_map(self, map_id, summary):
-        '''Adds an identifier for a map + (map mineral density, internal map)'''
+        '''
+        Adds an identifier for a map + (map mineral density, internal map)
+        '''
         internal_map = Area()
         internal_map.map_id = map_id
         self.map_list.append(map_id)
@@ -44,10 +46,10 @@ class Overlord(Zerg):
         '''
         Entry point of action for Overlord. Context not currently used.
         '''
-        #print(str(list(self.maps.values())[0]))
         for unit in list(self.zerg.values()):
             if unit.status:
-                unit.path_queue = self._generate_path(unit.current_map, unit.position.current)
+                unit.path_queue = self._generate_path(unit.current_map,
+                                                      unit.position.current)
                 unit.status = False
             elif unit.returning:
                 unit.returning = False
@@ -75,6 +77,8 @@ class Overlord(Zerg):
         if not mineral_coord:
             coordinate_path = shortest_path(graph, current_position, (0, 0))
         else:
-            coordinate_path = shortest_path(graph, current_position, mineral_coord)
+            coordinate_path = shortest_path(graph,
+                                            current_position,
+                                            mineral_coord)
             home_path = shortest_path(graph, mineral_coord, (0, 0))
         return generate_cardinality(coordinate_path)
